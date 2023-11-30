@@ -1,10 +1,9 @@
 import subprocess
 import os
-import io
 import sys
 
 from PyQt5 import uic, QtCore, QtMultimedia
-from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog, QFileDialog
+from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog
 import openpyxl
 import openai
 import threading
@@ -46,8 +45,7 @@ english_to_russian = {
 russian_to_number = {
     'первый': 1, 'второй': 2, 'третий': 3, 'четвертый': 4, 'пятый': 5,
     'шестой': 6, 'седьмой': 7, 'восемой': 8, 'девятый': 9, 'десятый': 10,
-    'одиннадцатый': 11,
-    # Добавьте остальные числа по аналогии
+    'одиннадцатый': 11
 }
 
 
@@ -105,70 +103,6 @@ def navigate_to_cell(cell):
     worksheet.Application.ActiveWindow.ScrollRow += 8
 
     time.sleep(30)
-
-
-class YeVAMainMenu(QMainWindow):
-    def __init__(self):
-        super(YeVAMainMenu, self).__init__()
-        uic.loadUi('YeVAMainMenu.ui', self)
-        self.voiceButton.clicked.connect(lambda: self.open_input())
-        self.settingsBtn.clicked.connect(lambda: self.open_password())
-        self.exitButton.clicked.connect(lambda: self.close_menu())
-
-    def open_password(self):
-        self.ui = PasswordDialogue()
-        self.ui.show()
-
-    def open_input(self):
-        self.ui = InputMenu()
-        self.ui.show()
-
-    def close_menu(self):
-        self.close()
-
-
-class PasswordDialogue(QDialog):
-    def __init__(self):
-        super(PasswordDialogue, self).__init__()
-        uic.loadUi('PasswordDialog.ui', self)
-        self.pushButton.clicked.connect(lambda: self.check_password_settings())
-
-    def check_password_settings(self):
-        if self.lineEdit.text() == "gym19":
-            try:
-                self.ui = SettingsMenu()
-                self.close()
-                self.ui.show()
-            except Exception as e:
-                print(e)
-
-
-class SettingsMenu(QMainWindow):
-    def __init__(self):
-        super(SettingsMenu, self).__init__()
-        uic.loadUi('YeVaSettingsMenu.ui', self)
-        self.quack('quack_5.mp3')
-
-        self.fileLoadButtonNews.clicked.connect(lambda: self.load_file_news())
-        self.pushButtonNews.clicked.connect(lambda: self.save_changes_news())
-        self.fileLoadButtonTable.clicked.connect(lambda: self.player.play())
-
-    def load_file_news(self):
-        with open('news.txt', 'r', encoding='utf8') as f:
-            self.textBrowser.setText(f.read())
-        # self.filename = QFileDialog.getOpenFileName()[0]
-        # pass
-
-    def quack(self, filename):
-        media = QtCore.QUrl.fromLocalFile(filename)
-        content = QtMultimedia.QMediaContent(media)
-        self.player = QtMultimedia.QMediaPlayer()
-        self.player.setMedia(content)
-
-    def save_changes_news(self):
-        with open('news.txt', 'w', encoding='utf8') as f:
-            f.write(self.textBrowser.toPlainText())
-            self.textBrowser.setText('')
 
 
 def voice(text):
@@ -312,6 +246,68 @@ def convert_to_number_or_word(word):
         return word.lower()
 
 
+class YeVAMainMenu(QMainWindow):
+    def __init__(self):
+        super(YeVAMainMenu, self).__init__()
+        uic.loadUi('YeVAMainMenu.ui', self)
+        self.voiceButton.clicked.connect(lambda: self.open_input())
+        self.settingsBtn.clicked.connect(lambda: self.open_password())
+        self.exitButton.clicked.connect(lambda: self.close_menu())
+
+    def open_password(self):
+        self.ui = PasswordDialogue()
+        self.ui.show()
+
+    def open_input(self):
+        self.ui = InputMenu()
+        self.ui.show()
+
+    def close_menu(self):
+        self.close()
+
+
+class PasswordDialogue(QDialog):
+    def __init__(self):
+        super(PasswordDialogue, self).__init__()
+        uic.loadUi('PasswordDialog.ui', self)
+        self.pushButton.clicked.connect(lambda: self.check_password_settings())
+
+    def check_password_settings(self):
+        if self.lineEdit.text() == "pw87":
+            try:
+                self.ui = SettingsMenu()
+                self.close()
+                self.ui.show()
+            except Exception as e:
+                print(e)
+
+
+class SettingsMenu(QMainWindow):
+    def __init__(self):
+        super(SettingsMenu, self).__init__()
+        uic.loadUi('YeVaSettingsMenu.ui', self)
+        self.quack('quack_5.mp3')
+
+        self.fileLoadButtonNews.clicked.connect(lambda: self.load_file_news())
+        self.pushButtonNews.clicked.connect(lambda: self.save_changes_news())
+        self.fileLoadButtonTable.clicked.connect(lambda: self.player.play())
+
+    def load_file_news(self):
+        with open('news.txt', 'r', encoding='utf8') as f:
+            self.textBrowser.setText(f.read())
+
+    def quack(self, filename):
+        media = QtCore.QUrl.fromLocalFile(filename)
+        content = QtMultimedia.QMediaContent(media)
+        self.player = QtMultimedia.QMediaPlayer()
+        self.player.setMedia(content)
+
+    def save_changes_news(self):
+        with open('news.txt', 'w', encoding='utf8') as f:
+            f.write(self.textBrowser.toPlainText())
+            self.textBrowser.setText('')
+
+
 class InputMenu(QMainWindow):
     def __init__(self):
         super(InputMenu, self).__init__()
@@ -367,9 +363,9 @@ class InputMenu(QMainWindow):
                             response = (f"  ({convert_to_number_or_word(search_words[0])})"
                                         f" не были найдены в расписании. Пожалуйста, повторите запрос.")
 
-                    elif ("новости" in command.lower() or "Новости гимназии" in command.lower() or "новости гимназии"
-                          in command.lower() or "Новости" in command.lower() or "Новости в гимназии" in command.lower()
-                          or "новости в гимназии" in command.lower()):
+                    elif ("новости" in command.lower() or "Новости школы" in command.lower() or "новости школы"
+                          in command.lower() or "Новости" in command.lower() or "Новости в школе" in command.lower()
+                          or "новости в школе" in command.lower()):
                         response = read_news()
                         self.textEdit_Listen.setText(last_command)
                     else:
@@ -397,3 +393,4 @@ if __name__ == '__main__':
     ex = YeVAMainMenu()
     ex.show()
     sys.exit(app.exec())
+
