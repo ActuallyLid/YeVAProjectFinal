@@ -4,6 +4,7 @@ import sys
 
 from PyQt5 import uic, QtCore, QtMultimedia
 from PyQt5.QtWidgets import QMainWindow, QApplication, QDialog
+from PyQt5.QtGui import QPixmap
 import openpyxl
 import openai
 import threading
@@ -288,6 +289,12 @@ class SettingsMenu(QMainWindow):
         uic.loadUi('YeVaSettingsMenu.ui', self)
         self.quack('quack_5.mp3')
 
+        pixmap1 = QPixmap('photo_2023-11-30_21-41-40.jpg')
+        pixmap2 = QPixmap('photo_2023-11-30_21-51-50.jpg')
+
+        self.cat_label.setPixmap(pixmap1)
+        self.cat_label1.setPixmap(pixmap2)
+
         self.fileLoadButtonNews.clicked.connect(lambda: self.load_file_news())
         self.pushButtonNews.clicked.connect(lambda: self.save_changes_news())
         self.fileLoadButtonTable.clicked.connect(lambda: self.player.play())
@@ -393,4 +400,3 @@ if __name__ == '__main__':
     ex = YeVAMainMenu()
     ex.show()
     sys.exit(app.exec())
-
