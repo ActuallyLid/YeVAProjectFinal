@@ -31,7 +31,7 @@
 </string>
     </property>
     <property name="currentIndex">
-     <number>1</number>
+     <number>0</number>
     </property>
     <widget class="QWidget" name="tab_bells">
      <attribute name="title">
@@ -87,6 +87,41 @@
       </property>
       <property name="text">
        <string>Вот кнопка для компенсации :)</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cat_label">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>340</y>
+        <width>181</width>
+        <height>181</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+     </widget>
+     <widget class="QLabel" name="cat_label1">
+      <property name="geometry">
+       <rect>
+        <x>530</x>
+        <y>340</y>
+        <width>181</width>
+        <height>171</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>TextLabel</string>
+      </property>
+      <property name="scaledContents">
+       <bool>true</bool>
+      </property>
+      <property name="wordWrap">
+       <bool>true</bool>
       </property>
      </widget>
     </widget>
@@ -156,7 +191,7 @@
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>26</height>
+     <height>22</height>
     </rect>
    </property>
   </widget>
